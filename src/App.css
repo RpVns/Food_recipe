@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,body,#root{
+    height: 100%;
+    width: 100%;
+}
+.he1{
+    color: green;
+}
+.bd{
+    display: flex;
+    justify-content: center;
+}
+.cb{
+    padding-left: 30px;
+    padding-top: 20px;
+}
+.bd .cb{
+    width: 25%;
+}
+.bd .rec{
+    width: 75%;
+}
+.dhe1,.ds{
+    display: flex;
+    justify-content: center;
+    
+}
+.card img{
+    height: 300px;
+    width: 300px;
+}
+.card div{
+    height: 60px;
+    text-align: center;
+}
+.search{
+    width: 400px;
+    height: 30px;
+    margin-bottom: 50px;
+    
+}
+.btn1{
+    height :30px;
+    font-weight: 600;
+    width: 60px;
+}
+.rec{
+    display: flex;
+    flex-wrap: wrap;
+   
+}
+.card{
+
+    width: 300px;
+    height: 400px;
+    margin: 18px;
+    box-shadow: 0px 10px 20px grey;
+    border-width: 50px;
+    border-color: red;
+
+}
+.card a{
+    text-align: center;
+}
