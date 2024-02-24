@@ -1,63 +1,73 @@
-
-import react from 'react';
-import { useState } from 'react';
-import Axios from 'axios'
+import React, { useState } from 'react';
+import Axios from 'axios';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import Receipe from './Component/Receipe';
 
-
 const App = () => {
-    const [querry, setQuerry] = useState("");
-    const [recp, setRecp] = useState([]);
+    const [query, setQuery] = useState("");
+    const [recipes, setRecipes] = useState([]);
 
     const App_id = "32cfb61c";
     const App_key = "1f7b73c2a07ff2303fe050fc9c9c3fab";
-    const url = `https://api.edamam.com/search?q=
-    ${querry}&app_id=${App_id}&app_key=${App_key}&from=0&to=12&calories=591-722&health=alcohol-free`;
+    const url = `https://api.edamam.com/search?q=${query}&app_id=${App_id}&app_key=${App_key}&from=0&to=12&calories=591-722&health=alcohol-free`;
+
     const getdata = async () => {
-        if (querry === "") {
+        if (query === "") {
             return;
         }
-        var result = await Axios.get(url);
-        console.log(result.data);
+        try {
+            const result = await Axios.get(url);
+            setRecipes(result.data.hits);
+            setQuery("");
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
 
-        setRecp(result.data.hits);
-        setQuerry("");
-    }
     const onChange = e => {
-        setQuerry(e.target.value);
+        setQuery(e.target.value);
     }
+
+    const handleKeyPress = e => {
+        if (e.key === 'Enter') {
+            getdata();
+        }
+    }
+
     return (
         <>
             <div className='pos'>
                 <div className='dhe1'>
-                    <h1 className='he1'>Search Your Receipe</h1>
+                    <h1 className='he1'>Search Your Recipe</h1>
                 </div>
                 <div className='ds'>
-                    <input type="text" autoComplete='off' className='search' onChange={onChange} value={querry} />
-                    <button onClick={getdata} className="btn1">search</button>
+                    <input
+                        type="text"
+                        autoComplete='off'
+                        className='search'
+                        onChange={onChange}
+                        onKeyPress={handleKeyPress}
+                        value={query}
+                    />
+                    <button onClick={getdata} className="btn1">Search</button>
                 </div>
             </div>
             <div className='bd'>
-
                 <div className='rec'>
-                    {recp !== [] && recp.map(re =>
-
+                    {recipes.map(re => (
                         <Receipe
                             key={uuidv4()}
                             label={re.recipe.label}
                             img={re.recipe.image}
                             url={re.recipe.url}
                             ingr={re.recipe.ingredients}
-
                         />
-                    )}
+                    ))}
                 </div>
             </div>
-
         </>
-    )
+    );
 }
 
 export default App;
